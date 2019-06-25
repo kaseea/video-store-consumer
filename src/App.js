@@ -15,6 +15,7 @@ class App extends Component {
     this.state = {
       movies: [],
       errorMessage: null,
+      customers: [],
 
     };
   }
@@ -86,14 +87,7 @@ class App extends Component {
           search={<Link to="/search">Search</Link>}
           />
         </ul>
-        <div>
-        <Route path="/customer"
-               render={() =>
-                 <CustomerCollection
-                 />
-               }
-               />
-        </div>
+
         
 
         {/*

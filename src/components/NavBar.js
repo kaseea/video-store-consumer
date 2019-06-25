@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
+import CustomerCollection from './CustomerCollection';
+import Library from './Library';
+import Search from './Search';
 
 import './NavBar.css';
 
@@ -46,9 +49,10 @@ class NavBar extends Component {
         );
       }
 
-      function onShowCustomers() {
+      function onShowCustomers({ match }) {
           return (
             <div>
+            {console.log({ match })}
             {console.log("POOOP")}
               <h3>please pleeeeease</h3>
             </div>
@@ -62,13 +66,15 @@ class NavBar extends Component {
         <li>{this.props.search}</li>
       </div>
       <Route path="/:id" component={Child} />
-
+      <Route path="/customers/" component={CustomerCollection} />
+      <Route path="/library/" component={Library} />
+      <Route path="/search/" component={Search} />
       <Route
       path="/order/:direction(asc|desc)"
       component={ComponentWithRegex}
-    />
+        />
 
-</Router>
+    </Router>
     )
   }
 }

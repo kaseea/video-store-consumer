@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 import Customer from './Customer';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import './CustomerCollection.css';
 
+
 class CustomerCollection extends Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          customers: [],
+        };
+    }
 
 
 componentDidMount() {
@@ -18,8 +27,9 @@ componentDidMount() {
         console.log("in axios!");
         console.log(response.data)
         this.setState({ 
-          movies: response.data,
-        })
+            
+          customers: response.data,
+            })
         })
         .catch((error) => {
         this.setState({ errorMessage: error.message });
@@ -30,13 +40,15 @@ componentDidMount() {
 
 
   render() {
-      const customerComponents = this.state.movies.map((movieObject, i) => {
+    //   const customerComponents = this.state.customers.map((movieObject, i) => {
         return (
-            <div key={i}>
-                <Customer customer={movieObject}/>  
+            <div>
+            <p>ugggh</p>
+            {/* // <div key={i}>  */}
+                {/* <Customer customer={movieObject}/>   */}
             </div>
         )
-    });
+    // });
   }
 }
 
