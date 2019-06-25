@@ -40,15 +40,27 @@ componentDidMount() {
 
 
   render() {
-    //   const customerComponents = this.state.customers.map((movieObject, i) => {
+      const customerComponents = this.state.customers.map((customer, i) => {
+          console.log(customer)
         return (
-            <div>
-            <p>ugggh</p>
-            {/* // <div key={i}>  */}
-                {/* <Customer customer={movieObject}/>   */}
+            <div key={i}>
+            {/* { console.log(customer)} */}
+
+                <Customer customer={customer}/> 
             </div>
         )
-    // });
+    });
+
+    return (
+        <section>
+          <p>{this.state.message}</p>
+  
+  
+          <ul>
+            {customerComponents}
+          </ul>
+        </section>
+      );
   }
 }
 

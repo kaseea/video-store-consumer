@@ -22,7 +22,7 @@ class Customer extends Component {
     return (
       <div>
         { console.log(this.props.customer) }
-        <h2>THIS IS A CUSTOMER</h2>
+        <p>{this.props.customer.name}</p>
       </div>
     )
   }
