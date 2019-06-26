@@ -5,6 +5,7 @@ import axios from 'axios';
 import CustomerCollection from './CustomerCollection';
 import Library from './Library';
 import Search from './Search';
+// import {getCurrentDate} from './utils';
 
 import './NavBar.css';
 
@@ -18,6 +19,7 @@ class NavBar extends Component {
           customers: [],
           selectedCustomer: null,
           selectedMovie: null,
+          errorMessage: null,
         };
       }
 
@@ -41,6 +43,7 @@ class NavBar extends Component {
             selectedMovie: movie
         });
     }
+
 
     componentDidMount() {
         // const localUrl = this.props.url + this.props.boardName + "/cards"
@@ -78,9 +81,53 @@ class NavBar extends Component {
         
     }
 
+    // can you return html/jsx outside the render/return?
+    checkOutMovie = () => {
+        console.log("heeeeere")
+        const due_date = new Date();
+        due_date.setDate(due_date.getDate() + 7);
+        console.log(due_date);
+        // date = 
+            const rentalDataToSendToApi = {
+              customer: this.state.selectedCustomer,
+              due_date: due_date,
+            };
+            const postURL = 'http://localhost:3007/rentals/' + this.state.selectedMovie.title + '/check-out?due_date=' + due_date + '&customer_id=' + this.state.selectedCustomer.id;
+            console.log(postURL);
+            
+            axios.post(postURL)
+            .then((response) => {
+              console.log("This is what response.data looks like from the API on a successful response", response.data)
+            //   let updatedCardList = this.state.cards;
+            //   updatedCardList.push({
+            //     text: card.text,
+            //     emoji: card.emoji,
+            //   });
+            //   this.setState({
+            //     card: updatedCardList,
+            //   });
+            })
+            
+            .catch((error) => {
+                // console.log(error.message)
+                console.log(error.response.data.errors.movie)
+
+              this.setState({
+                errorMessage: error.response.data.errors.movie
+              });
+            });
+
+    }
+
   
 
   render() {
+    const errorSection = (this.state.errorMessage) ? 
+    (<section>
+       Check out failed: { this.state.selectedMovie.title } {this.state.errorMessage} { this.state.selectedCustomer.name }
+     </section>) : null;
+    //   const newDate = new Date() + 7;
+    // console.log(newDate)
     const customerSelected = (this.state.selectedCustomer) ? 
     (<section>
        <p>selected customer is: {this.state.selectedCustomer.name}</p>
@@ -91,6 +138,8 @@ class NavBar extends Component {
        <p>selected movie is: {this.state.selectedMovie.title}</p>
      </section>) : null;
 
+
+// 
     return (
     <Router>
       <div>
@@ -101,6 +150,13 @@ class NavBar extends Component {
       <div>
         { customerSelected }
         { movieSelected }
+        { (movieSelected !== null && customerSelected !== null) && 
+                <button 
+                    onClick={() => this.checkOutMovie()}>
+                    Check out movie
+                </button>
+        }
+        { errorSection }
       </div>
       <Route path="/customers/" render={(props) => (
           <CustomerCollection 
@@ -116,7 +172,7 @@ class NavBar extends Component {
           />
       )}/>
       <Route path="/search/" component={Search} />
-
+    
 
 
     </Router>
