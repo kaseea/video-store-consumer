@@ -60,7 +60,7 @@ class NavBar extends Component {
         .catch((error) => {
         this.setState({ errorMessage: error.message });
         });
-      const localUrl2 = 'http://localhost:3007/customers'
+      const localUrl2 = 'http://localhost:3000/customers'
       // is this needed and why?
       // const cards = this.state.cards
       axios.get(localUrl2)
