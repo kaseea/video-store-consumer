@@ -66,11 +66,7 @@ class Search extends Component {
   
       axios.post('http://localhost:3000/movies/', addedMovieInfo)
        .then((response) => {
-          const newMovie = { ...response.data.movie}
-          const currentMovies = this.state.movies;
-          currentMovies.push(newMovie);
         this.setState({
-          movies: currentMovies,
           confirmation: `Successfully added ${addedMovie.title} to library.`
         });
         })
