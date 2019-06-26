@@ -29,6 +29,7 @@ class NavBar extends Component {
         this.setState({
             selectedCustomer: customer
         });
+        console.log(customer.name)
     }
 
     onSelectMovie = (movieId) => {
@@ -80,12 +81,26 @@ class NavBar extends Component {
   
 
   render() {
+    const customerSelected = (this.state.selectedCustomer) ? 
+    (<section>
+       <p>selected customer is: {this.state.selectedCustomer.name}</p>
+     </section>) : null;
+    
+    const movieSelected = (this.state.selectedMovie) ? 
+    (<section>
+       <p>selected movie is: {this.state.selectedMovie.title}</p>
+     </section>) : null;
+
     return (
     <Router>
       <div>
         <li>{this.props.allMovies} </li>
         <li>{this.props.allCustomers}</li>
         <li>{this.props.search}</li>
+      </div>
+      <div>
+        { customerSelected }
+        { movieSelected }
       </div>
       <Route path="/customers/" render={(props) => (
           <CustomerCollection 
