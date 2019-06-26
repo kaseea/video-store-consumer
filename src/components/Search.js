@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import './Search.css';
 import axios from 'axios';
 
+require('dotenv').config()
+
 class Search extends Component {
     constructor(props) {
         super(props);
     
         this.state = {
-        movies: [],
+        result: [],
+        titleSearch: '',
         };
       }
 
@@ -20,42 +23,49 @@ class Search extends Component {
         this.setState(field);
       }
         
-      searchMovieCallback = (event) => {
+      searchMovie = (event) => {
         event.preventDefault();
-    
-        this.props.searchMovieCallback({
-            title: this.state.title,
+
+        this.searchMovieResult(this.state.titleSearch);
+
+        this.setState({
+          titleSearch: '',
         });
       }
       
       componentDidMount () {
-        const externalUrl = 'https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false';
-          axios.get(externalUrl)
-            .then((response) => {
-              const newMovies= response.data.map((movie) => {
-                return {
-                  id: movie.id,
-                  title: movie.title,
-                  overview: movie.overview,
-                  release_date: movie.release_date,
-                  image_url: movie.image_url,
-                  external_id: movie.external_id,
-                }
-              })
-              this.setState({
-                title: newMovies,
-              });
-            })
-            .catch((error) => {
-              this.setState({
-                errorMessage: `${error.message} when retrieving cards.`,
-              });
-            });
+        this.searchMovieResult();
       }
+
+      searchMovieResult = (titleSearch) => {
+      const externalUrl = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=Speed`;
+      console.log(externalUrl);
+        axios.get(externalUrl)
+          .then((response) => {
+            const movies = response.data.map((movie) => {
+              return {
+                id: movie.id,
+                title: movie.title,
+                overview: movie.overview,
+                release_date: movie.release_date,
+                image_url: movie.image_url,
+                external_id: movie.external_id,
+              }
+            })
+            this.setState({
+              result: movies,
+            });
+          })
+          .catch((error) => {
+            this.setState({
+              errorMessage: `${error.message} when retrieving movies.`,
+            });
+          });
+    }
     
       render() {
         return (
-          <form className="search-movie-form" onSubmit={this.addMovieCallback}>
+          <form className="search-movie-form" onSubmit={this.searchMovie}>
             <div className="search-movie">
                 <h3 className="search-movie__header">Search Movie</h3>
             </div>
@@ -69,7 +79,8 @@ class Search extends Component {
                   value={this.state.title}>
                 </input>
             </div>
-            <input className="search-movie-form__form-button" type="submit" name="submit" value="Add Movie" />
+            <input className="search-movie-form__form-button" type="submit" name="submit" value="Search Movie" />
+
         </form>
         )};
     }

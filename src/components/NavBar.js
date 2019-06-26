@@ -9,70 +9,115 @@ import Search from './Search';
 import './NavBar.css';
 
 class NavBar extends Component {
+    constructor() {
+        super();
+    
+        this.state = {
+          movies: [],
+          errorMessage: null,
+          customers: [],
+          selectedCustomer: null,
+          selectedMovie: null,
+        };
+      }
 
-    // componentDidMount() {
-    //     // const localUrl = this.props.url + this.props.boardName + "/cards"
-    //     const localUrl = 'http://localhost:3007/customers'
-    //     console.log(localUrl);
-    //     // is this needed and why?
-    //     // const cards = this.state.cards
-    //     axios.get(localUrl)
-    //       .then((response) => {
-    //         console.log("in axios!");
-    //         console.log(response.data)
-    //         // this.setState({ 
-    //         //   cards: response.data,
-    //         // })
-    //       })
-    //       .catch((error) => {
-    //         this.setState({ errorMessage: error.message });
-    //       });
-    //   }
+    onSelectCustomer = (customerId) => {
+        // console.log(this.state.customers)
+        // console.log(customerId);
+        const customer = this.state.customers.find(customer => customer.id === customerId)
+        console.log(customer);
+        this.setState({
+            selectedCustomer: customer
+        });
+        console.log(customer.name)
+    }
+
+    onSelectMovie = (movieId) => {
+        // console.log(this.state.movies)
+        // console.log(movieId);
+        const movie = this.state.movies.find(movie => movie.id === movieId)
+        console.log(movie);
+        this.setState({
+            selectedMovie: movie
+        });
+    }
+
+    componentDidMount() {
+        // const localUrl = this.props.url + this.props.boardName + "/cards"
+        const localUrl = 'http://localhost:3007/movies'
+        console.log(localUrl);
+        // is this needed and why?
+        // const cards = this.state.cards
+        axios.get(localUrl)
+            .then((response) => {
+            console.log("in axios!");
+            console.log(response.data)
+            this.setState({ 
+                
+              movies: response.data,
+                })
+            })
+            .catch((error) => {
+            this.setState({ errorMessage: error.message });
+            });
+        const localUrl2 = 'http://localhost:3007/customers'
+        // is this needed and why?
+        // const cards = this.state.cards
+        axios.get(localUrl2)
+            .then((response) => {
+            console.log("in axios!");
+            console.log(response.data)
+            let updatedCustomers = response.data;
+                this.setState({             
+                    customers: updatedCustomers,
+                })
+            })
+            .catch((error) => {
+            this.setState({ errorMessage: error.message });
+            });
+        
+    }
 
   
 
   render() {
-    function Child({ match }) {
-        return (
-          <div>
-            <h3>ID: {match.params.id}</h3>
-            <p>awesome, we're getting { match.params.id } by typing in match.params.id </p>
-          </div>
-        );
-      }
-  
-      function ComponentWithRegex({ match }) {
-        return (
-          <div>
-            <h3>Only asc/desc are allowed: {match.params.direction}</h3>
-          </div>
-        );
-      }
+    const customerSelected = (this.state.selectedCustomer) ? 
+    (<section>
+       <p>selected customer is: {this.state.selectedCustomer.name}</p>
+     </section>) : null;
+    
+    const movieSelected = (this.state.selectedMovie) ? 
+    (<section>
+       <p>selected movie is: {this.state.selectedMovie.title}</p>
+     </section>) : null;
 
-      function onShowCustomers({ match }) {
-          return (
-            <div>
-            {console.log({ match })}
-            {console.log("POOOP")}
-              <h3>please pleeeeease</h3>
-            </div>
-          );
-      }
     return (
     <Router>
       <div>
-        <li onClick={onShowCustomers}>{this.props.allMovies} </li>
+        <li>{this.props.allMovies} </li>
         <li>{this.props.allCustomers}</li>
         <li>{this.props.search}</li>
       </div>
-      <Route path="/:id" component={Child} />
-      <Route path="/customers/" component={CustomerCollection} />
-      <Route path="/library/" component={Library} />
+      <div>
+        { customerSelected }
+        { movieSelected }
+      </div>
+      <Route path="/customers/" render={(props) => (
+          <CustomerCollection 
+          onSelectCustomerCallback={this.onSelectCustomer}
+          customers={this.state.customers}
+          />
+      )}/>
+      
+      <Route path="/library/" render={(props) => (
+          <Library
+          onSelectMovieCallback={this.onSelectMovie}
+          movies={this.state.movies} 
+          />
+      )}/>
       <Route path="/search/" component={Search} />
-      <Route
-      path="/order/:direction(asc|desc)"
-      component={ComponentWithRegex}
-        />
+
+
 
     </Router>
     )
