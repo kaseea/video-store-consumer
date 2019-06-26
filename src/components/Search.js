@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 import './Search.css';
 import axios from 'axios';
-import Movie from './Movie';
-
-require('dotenv').config();
+import MovieResult from './MovieResult';
 
 class Search extends Component {
   constructor(props) {
       super(props);
   
       this.state = {
-      result: [],
+      movies: [],
+      results: [],
       titleSearch: '',
       errorMessage: '',
+      confirmation: '',
       };
     }
 
@@ -40,24 +40,11 @@ class Search extends Component {
   }
 
   searchMovieResults = (titleSearch) => {
-    const externalUrl = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${titleSearch}&page=1&include_adult=false`;
-    console.log(externalUrl)
-      axios.get(externalUrl)
+      axios.get(`http://localhost:3000/movies?query=${titleSearch}`)
         .then((response) => {
-          const movies = response.data.results.map((movie) => {
-            return {
-              id: movie.id,
-              title: movie.title,
-              overview: movie.overview,
-              release_date: movie.release_date,
-              image_url: `http://image.tmdb.org/t/p/w185//${movie.poster_path }`,
-              external_id: movie.external_id,
-            }
-          })
           this.setState({
-            result: movies,
+            results: response.data,
           });
-          console.log(movies)
         })
         .catch((error) => {
           this.setState({
@@ -66,40 +53,54 @@ class Search extends Component {
         });
   }
 
-    // addMovie = (movieId) => {
-    //   console.log(this.state);
-    //   const addedMovie = this.state.searchResults.find(movie => movie.external_id === movieId)
-    //   const addedMovieInfo = {
-    //     title: addedMovie.title,
-    //     overview: addedMovie.overview,
-    //     release_date: addedMovie.release_date,
-    //     image_url: addedMovie.image_url,
-    //     external_id: addedMovie.external_id,
-    //     inventory: 5
-    //   }
+    addMovieCallback = (movieId) => {
+      const addedMovie = this.state.results.find(movie => movie.external_id === movieId)
+      const addedMovieInfo = {
+        title: addedMovie.title,
+        overview: addedMovie.overview,
+        release_date: addedMovie.release_date,
+        image_url: addedMovie.image_url,
+        external_id: addedMovie.external_id,
+        inventory: 5
+      }
   
-    //   axios.post('http://localhost:3000/movies/', addedMovieInfo)
-    //    .then((response) => {
-    //      this.props.searchCallback(`Successfully added ${addedMovieData.title} to library`)
-    //    })
-    //    .catch((error) => {
-    //      console.log(`Error: ${error.message}`);
-    //    })
-    // }
+      axios.post('http://localhost:3000/movies/', addedMovieInfo)
+       .then((response) => {
+          const newMovie = { ...response.data.movie}
+          const currentMovies = this.state.movies;
+          currentMovies.push(newMovie);
+        this.setState({
+          movies: currentMovies,
+          confirmation: `Successfully added ${addedMovie.title} to library.`
+        });
+        })
+       .catch((error) => {
+        this.setState({
+         errorMessage: `${error.message} when adding movie to library.`
+        })
+      });
+  }
     
     render() {
-      const movieResults = this.state.result.map((movie, i) => {
+      const movieResults = this.state.results.map((movie, i) => {
         return (
-          <Movie
+          <MovieResult
           key={i}
           title={movie.title}
           image_url={movie.image_url}
           overview={movie.overview}
+          addMovieToLibraryCallback={this.addMovieCallback}
           />
         )
       });
       return (
       <div>
+        <div className="validation-errors-display">    
+          {this.state.errorMessage}
+        </div>
+        <div className="validation-confirmation">
+          {this.state.confirmation}
+        </div>
         <form className="search-movie-form" onSubmit={this.searchMovie}>
           <div className="search-movie">
               <h3 className="search-movie__header">Search Movie</h3>
@@ -127,6 +128,7 @@ class Search extends Component {
     
   Search.propTypes = {
       searchMovieResults: PropTypes.func.isRequired,
+
     };
   
   export default Search;
