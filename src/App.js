@@ -5,10 +5,20 @@ import NavBar from './components/NavBar';
 import CustomerCollection from './components/CustomerCollection';
 import axios from 'axios';
 import './App.css';
+import Search from './components/Search';
 
 
 class App extends Component {
+  constructor() {
+    super();
 
+    this.state = {
+      movies: [],
+      customers: [],
+      selectedCustomer: null,
+      selectedMovie: null,
+    };
+  }
 
 
   // addCardCallback = (card) => {
