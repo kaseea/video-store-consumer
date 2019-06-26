@@ -9,16 +9,7 @@ import './App.css';
 
 class App extends Component {
 
-  constructor() {
-    super();
 
-    this.state = {
-      movies: [],
-      errorMessage: null,
-      customers: [],
-
-    };
-  }
 
   // addCardCallback = (card) => {
   //   console.log(card.text);
@@ -51,25 +42,6 @@ class App extends Component {
   //   });
   // }
 
-  // componentDidMount() {
-  //   // const localUrl = this.props.url + this.props.boardName + "/cards"
-  //   const localUrl = 'http://localhost:3007/customers'
-  //   console.log(localUrl);
-  //   // is this needed and why?
-  //   // const cards = this.state.cards
-  //   axios.get(localUrl)
-  //     .then((response) => {
-  //       // console.log("in axios!");
-  //       // console.log(response.data)
-  //       this.setState({ 
-  //         cards: response.data,
-  //       })
-  //     })
-  //     .catch((error) => {
-  //       this.setState({ errorMessage: error.message });
-  //     });
-  // }
-
 
   
   render() {
@@ -89,13 +61,6 @@ class App extends Component {
         </ul>
 
         
-
-        {/*
-           It's possible to use regular expressions to control what param values should be matched.
-              * "/order/asc"  - matched
-              * "/order/desc" - matched
-              * "/order/foo"  - not matched
-        */}
 
       </div>
     </Router>

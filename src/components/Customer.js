@@ -21,8 +21,16 @@ class Customer extends Component {
   render() {
     return (
       <div>
-        { console.log(this.props.customer) }
+        
+
         <p>{this.props.customer.name}</p>
+        <p>{this.props.customer.id}</p>
+        <button 
+        // { console.log(this.props.customer.id) }
+            // onClick = {() => console.log(this.props)}>
+            onClick = {() => this.props.onSelectCustomerCallback(this.props.customer.id) }>
+            Select
+        </button>
       </div>
     )
   }
