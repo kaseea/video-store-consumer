@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import CustomerCollection from './components/CustomerCollection';
 import axios from 'axios';
 import './App.css';
+import Search from './components/Search';
 
 
 class App extends Component {
@@ -16,7 +17,6 @@ class App extends Component {
       movies: [],
       errorMessage: null,
       customers: [],
-
     };
   }
 
@@ -87,16 +87,14 @@ class App extends Component {
           search={<Link to="/search">Search</Link>}
           />
         </ul>
-
-        
-
+          {/* <Search
+          externalUrl='https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false'/> */}
         {/*
            It's possible to use regular expressions to control what param values should be matched.
               * "/order/asc"  - matched
               * "/order/desc" - matched
               * "/order/foo"  - not matched
         */}
-
       </div>
     </Router>
     );
