@@ -9,7 +9,16 @@ import Search from './components/Search';
 
 
 class App extends Component {
+  constructor() {
+    super();
 
+    this.state = {
+      movies: [],
+      customers: [],
+      selectedCustomer: null,
+      selectedMovie: null,
+    };
+  }
 
 
   // addCardCallback = (card) => {
