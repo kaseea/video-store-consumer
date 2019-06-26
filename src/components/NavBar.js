@@ -44,7 +44,7 @@ class NavBar extends Component {
 
     componentDidMount() {
       // const localUrl = this.props.url + this.props.boardName + "/cards"
-      const localUrl = 'http://localhost:3007/movies'
+      const localUrl = 'http://localhost:3000/movies'
       console.log(localUrl);
       // is this needed and why?
       // const cards = this.state.cards
