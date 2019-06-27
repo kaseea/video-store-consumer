@@ -16,7 +16,7 @@ const MovieResult = (props) => {
                 <span>
                 </span> 
               </div>
-              <button onClick={() => props.addMovieToLibraryCallback(props.id)} >
+              <button onClick={() => props.addMovieToLibraryCallback(props)} >
                 Add Movie to Library
               </button>
             </div>
@@ -24,5 +24,12 @@ const MovieResult = (props) => {
       )
 }
 
-
+MovieResult.propTypes= {
+  id:PropTypes.number,
+  title:PropTypes.string,
+  overview:PropTypes.string,
+  release_date:PropTypes.string,
+  image_url:PropTypes.string,
+  external_id:PropTypes.number,
+}
 export default MovieResult;
