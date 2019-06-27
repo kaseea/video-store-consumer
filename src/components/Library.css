@@ -1,0 +1,29 @@
+/* .movie__section image {
+    position: relative;
+    max-width: 300px;
+    height: auto;
+    background-size: cover;
+} */
+
+.cover__container {
+    width: 405px;
+    height: 597px;
+    background: url('../images/blockbusterContainer.jpg') no-repeat;
+    text-align: center;
+}
+
+.Centerer
+{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.cover {
+    vertical-align: middle;
+
+}
+
+.movie__info{
+    word-break: break-all;
+}

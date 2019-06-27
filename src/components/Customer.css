@@ -1,0 +1,13 @@
+.customer_icon {
+    float: left;
+}
+
+.middle {
+    text-align: left;
+}
+
+.customer__section {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
