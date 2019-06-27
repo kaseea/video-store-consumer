@@ -10,7 +10,6 @@ class Search extends Component {
       super(props);
   
       this.state = {
-      movies: [],
       results: [],
       titleSearch: '',
       errorMessage: '',
@@ -53,22 +52,21 @@ class Search extends Component {
         });
   }
 
-    addMovieCallback = (movieId) => {
-      const addedMovie = this.state.results.find(movie => movie.external_id === movieId)
+    addMovieCallback = (movie) => {
       const addedMovieInfo = {
-        title: addedMovie.title,
-        overview: addedMovie.overview,
-        release_date: addedMovie.release_date,
-        image_url: addedMovie.image_url,
-        external_id: addedMovie.external_id,
+        title: movie.title,
+        overview: movie.overview,
+        release_date: movie.release_date,
+        image_url: movie.image_url,
+        external_id: movie.external_id,
         inventory: 5
       }
   
       axios.post('http://localhost:3000/movies/', addedMovieInfo)
        .then((response) => {
-        this.setState({
-          confirmation: `Successfully added ${addedMovie.title} to library.`
-        });
+          this.setState({
+            confirmation: `Succesfully added ${response.data.title} to library.`,
+          });
         })
        .catch((error) => {
         this.setState({
