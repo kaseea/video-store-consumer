@@ -18,6 +18,8 @@ class Library extends Component {
         // let c = parseInt(b,10);
         // console.log(c);
         // console.log(typeof c);
+        // console.log(parseInt(movie.release_date.substr(0, 4),10));
+        if (movie.release_date !== null && parseInt(movie.release_date.substr(0, 4),10) < 2000) {
         return (
             <div key={i} className="movie">
             <div className="movie__section">
@@ -35,6 +37,7 @@ class Library extends Component {
             </div>
         </div>
         )
+        }
     });
 
     return (

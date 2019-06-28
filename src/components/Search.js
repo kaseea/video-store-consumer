@@ -83,6 +83,7 @@ class Search extends Component {
     
     render() {
       const movieResults = this.state.results.map((movie, i) => {
+        if (movie.release_date !== null && parseInt(movie.release_date.substr(0, 4),10) < 2000) {
         return (
           <MovieResult
           key={i}
@@ -94,6 +95,7 @@ class Search extends Component {
           addMovieToLibraryCallback={this.addMovieCallback}
           />
         )
+        }
       });
       return (
       <div>
