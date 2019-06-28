@@ -5,19 +5,33 @@
     background-size: cover;
 } */
 
-.cover__container {
+
+
+.movie__section {
+    /* grid-column-start: 2; */
+
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: space-around; */
+  
+    text-align: center;
+    font-weight: 100;
+    overflow: hidden;
+}
+
+/* .cover__container {
     width: 405px;
     height: 597px;
     background: url('../images/blockbusterContainer.jpg') no-repeat;
     text-align: center;
-}
+} */
 
-.Centerer
+/* .Centerer
 {
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-}
+} */
 
 .cover {
     vertical-align: middle;

@@ -73,6 +73,7 @@ class Search extends Component {
          errorMessage: `${error.message} when adding movie to library.`
         })
       });
+
   }
     
     render() {
