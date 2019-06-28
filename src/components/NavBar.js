@@ -42,7 +42,26 @@ class NavBar extends Component {
       });
     }
 
+    // addMovieCallback = () => {
+    //   this.getMoviesForLibrary();
+    // }
+
+    addMovie = (movie) => {
+      const list = [...this.state.movies]
+      list.push(movie);
+  
+      this.setState({movies: list});
+    }
+
+    getMovies = (movies) => {
+      this.setState( {movies: movies})
+    }
+
     componentDidMount() {
+      this.getMoviesForLibrary();
+    }
+
+    getMoviesForLibrary = () => {
       // const localUrl = this.props.url + this.props.boardName + "/cards"
       const localUrl = 'http://localhost:3000/movies'
       console.log(localUrl);
@@ -53,9 +72,10 @@ class NavBar extends Component {
         console.log("in axios!");
         console.log(response.data)
         this.setState({ 
-            
           movies: response.data,
             })
+            console.log(this.state.movies)
+            this.props.getMoviesCallback(this.state.movies)
         })
         .catch((error) => {
         this.setState({ errorMessage: error.message });
@@ -111,12 +131,15 @@ class NavBar extends Component {
       <Route path="/library/" render={(props) => (
           <Library
           onSelectMovieCallback={this.onSelectMovie}
-          movies={this.state.movies} 
+          movies={this.state.movies}
+          getMoviesCallback={this.getMovies}
           />
       )}/>
-      <Route path="/search/" component={Search} />
-
-
+      <Route path="/search/" render={(props) => (
+        <Search 
+        addMovieCallback={this.addMovie}
+        />
+      )}/>
 
     </Router>
     )

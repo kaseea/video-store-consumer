@@ -10,6 +10,7 @@ class Search extends Component {
       super(props);
   
       this.state = {
+      movies: [],
       results: [],
       titleSearch: '',
       errorMessage: '',
@@ -64,23 +65,16 @@ class Search extends Component {
       
       axios.post('http://localhost:3000/movies/', addedMovieInfo)
        .then((response) => {
-        // const newMovie = { ...response.data.movie }
-        // const currentMovies = this.state.movies;
-        // currentMovies.push(newMovie);
-
         this.setState({
-          // movies: currentMovies,
           confirmation: `Succesfully added ${response.data.title} to library.`,
           });
         })
        .catch((error) => {
          console.log(error.response)
         this.setState({
-         errorMessage: `${error.response.data.message} when adding movie to library.`
+         errorMessage: `${error.response.data.message} and can't be added to the library.`
         })
       });
-
-
   }
     
     render() {

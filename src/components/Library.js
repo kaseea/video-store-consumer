@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 
 class Library extends Component {
     constructor(props) {
         super(props);    
     }
-
   render() {
       const movieComponents = this.props.movies.map((movie, i) => {
         return (
