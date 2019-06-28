@@ -1,9 +1,20 @@
+
+.Customer-Card {
+    text-align: center;
+}
+
 .customer_icon {
     float: left;
 }
 
 .middle {
     text-align: left;
+    margin: 10px;
+}
+
+.card_text {
+    margin: 0 auto;
+    width: 600px;
 }
 
 .customer__section {

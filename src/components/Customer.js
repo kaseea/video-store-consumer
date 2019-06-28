@@ -12,7 +12,9 @@ class Customer extends Component {
 
       <div className="customer__section">
              <h2 className="customer_name">{this.props.customer.name}</h2>
-        <img className="customer_icon" src={card} alt="customer card"/>
+        
+        <div className="card_text">
+          <img className="customer_icon" src={card} alt="customer card"/>
  
           
           <div class="middle">
@@ -21,6 +23,7 @@ class Customer extends Component {
             <p>registered at: {this.props.customer.registered_at}</p>
             <p>address: {this.props.customer.address}  {this.props.customer.city}, {this.props.customer.state} {this.props.customer.postal_code}</p>
           </div>
+        </div>
           <button 
             onClick = {() => this.props.onSelectCustomerCallback(this.props.customer.id) }>
             Select Customer

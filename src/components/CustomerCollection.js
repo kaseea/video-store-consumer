@@ -19,7 +19,7 @@ class CustomerCollection extends Component {
 
     return (
         <section>
-          <ul>
+          <ul >
             {customerComponents}
           </ul>
         </section>
