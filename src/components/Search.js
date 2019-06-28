@@ -12,7 +12,7 @@ class Search extends Component {
       this.state = {
       results: [],
       titleSearch: '',
-      errorMessage: '',
+      errorMessage: null,
       confirmation: '',
       };
     }
@@ -39,7 +39,7 @@ class Search extends Component {
   }
 
   searchMovieResults = (titleSearch) => {
-      axios.get(`http://localhost:3007/movies?query=${titleSearch}`)
+      axios.get(`http://localhost:3000/movies?query=${titleSearch}`)
         .then((response) => {
           this.setState({
             results: response.data,
@@ -62,19 +62,15 @@ class Search extends Component {
         inventory: 5
       }
 
-      axios.post('http://localhost:3007/movies/', addedMovieInfo)
+      axios.post('http://localhost:3000/movies/', addedMovieInfo)
        .then((response) => {
-        // const newMovie = { ...response.data.movie }
-        // const currentMovies = this.state.movies;
-        // currentMovies.push(newMovie);
-
         this.setState({
-          // movies: currentMovies,
           confirmation: `Succesfully added ${response.data.title} to library.`,
           });
+          this.props.addMovieCallback(response.data);
         })
        .catch((error) => {
-         console.log(error.response)
+         console.log(error.message)
         this.setState({
          errorMessage: `${error.response.data.message} when adding movie to library.`
         })
