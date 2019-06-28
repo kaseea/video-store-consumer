@@ -61,19 +61,24 @@ class Search extends Component {
         external_id: movie.external_id,
         inventory: 5
       }
-  
+
       axios.post('http://localhost:3007/movies/', addedMovieInfo)
        .then((response) => {
-          this.setState({
-            confirmation: `Succesfully added ${response.data.title} to library.`,
+        // const newMovie = { ...response.data.movie }
+        // const currentMovies = this.state.movies;
+        // currentMovies.push(newMovie);
+
+        this.setState({
+          // movies: currentMovies,
+          confirmation: `Succesfully added ${response.data.title} to library.`,
           });
         })
        .catch((error) => {
+         console.log(error.response)
         this.setState({
-         errorMessage: `${error.message} when adding movie to library.`
+         errorMessage: `${error.response.data.message} when adding movie to library.`
         })
       });
-
   }
     
     render() {
@@ -84,6 +89,8 @@ class Search extends Component {
           title={movie.title}
           image_url={movie.image_url}
           overview={movie.overview}
+          external_id={movie.external_id}
+          release_date={movie.release_date}
           addMovieToLibraryCallback={this.addMovieCallback}
           />
         )
@@ -122,8 +129,7 @@ class Search extends Component {
   }
     
   Search.propTypes = {
-      searchMovieResults: PropTypes.func.isRequired,
-
+    searchMovieResults: PropTypes.func,
     };
   
   export default Search;
