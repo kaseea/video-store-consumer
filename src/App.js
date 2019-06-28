@@ -29,8 +29,8 @@ class App extends Component {
       <header className="App-header">
           <h1 className="App-title">Welcome to</h1>  
           <img src={ blockbuster } className="App-logo" alt="logo" />    
-      <div >
-        <h2>Movie Portal</h2>
+      <nav >
+        <h2 className="big-words">Movie Portal</h2>
         <ul className="Nav-header">
           <NavBar 
           allCustomers={<Link to="/customers">Customers</Link>}          
@@ -38,7 +38,7 @@ class App extends Component {
           search={<Link to="/search">Search</Link>}
           />
         </ul>
-      </div>
+      </nav>
       </header>
       </body>
     </Router>

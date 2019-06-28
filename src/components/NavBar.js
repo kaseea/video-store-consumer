@@ -20,6 +20,7 @@ class NavBar extends Component {
         customers: [],
         selectedCustomer: null,
         selectedMovie: null,
+        confirmation: null,
       };
     }
 
@@ -49,7 +50,6 @@ class NavBar extends Component {
       axios.get(localUrl)
         .then((response) => {
         this.setState({ 
-            
           movies: response.data,
             })
         })
@@ -77,17 +77,18 @@ class NavBar extends Component {
         const due_date = new Date();
         due_date.setDate(due_date.getDate() + 7);
         console.log(due_date);
-
             const postURL = 'http://localhost:3007/rentals/' + this.state.selectedMovie.title + '/check-out?due_date=' + due_date + '&customer_id=' + this.state.selectedCustomer.id;
             console.log(postURL);
             
             axios.post(postURL)
             .then((response) => {
               console.log("This is what response.data looks like from the API on a successful response", response.data)
+
               this.setState({
                 confirmationMessage: `${ this.state.selectedMovie.title } has been successfully checked out by ${ this.state.selectedCustomer.name }`,
                 errorMessage: null
                 });
+
             })
             
             .catch((error) => {
@@ -101,9 +102,13 @@ class NavBar extends Component {
             });
 
     }
-
+    
+    addMovie = (movie) => {
+      this.setState({
+        movies: [...this.state.movies, movie]
+      })
+    }
   
-
   render() {
       // fix the error message to work on both
     const confirmationSection = (this.state.confirmationMessage) ?
@@ -123,6 +128,7 @@ class NavBar extends Component {
     (<section>
        <p>selected movie is: {this.state.selectedMovie.title}</p>
      </section>) : null;
+
 
 
 // 
@@ -158,10 +164,11 @@ class NavBar extends Component {
           movies={this.state.movies} 
           />
       )}/>
-      <Route path="/search/" component={Search} />
-    
-
-
+      <Route path="/search/" render={(props) => (
+          <Search
+          addMovieCallback={this.addMovie}
+        />
+      )}/>
     </Router>
     )
   }

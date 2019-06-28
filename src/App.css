@@ -1,12 +1,36 @@
 
 
-body {
+/* body {
   text-align: center;
   background-image: url("./images/background.jpg");
   background-repeat: repeat;
   height: 100%;
   color: yellow;
 
+} */
+
+body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto auto;
+  margin: 0 auto;
+  text-align: center;
+  background-image: url("./images/background.jpg");
+  background-repeat: repeat;
+  height: 100%;
+  color: yellow;
+}
+
+nav {
+  width: 100%;
+  font-family: "Merriweather", serif;
+}
+
+nav ul {
+  position: relative;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -25,6 +49,7 @@ a {
   color: black;
   float: left;
   margin-left: 300px;
+  font-size: 2em;
 }
 .App-header {
   height: 150px;
@@ -35,4 +60,8 @@ a {
 
 .App-title {
   font-size: 1.5em;
+}
+
+.big-words {
+  font-size: 2em;
 }

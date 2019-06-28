@@ -12,7 +12,7 @@ class Search extends Component {
       this.state = {
       results: [],
       titleSearch: '',
-      errorMessage: '',
+      errorMessage: null,
       confirmation: '',
       };
     }
@@ -64,17 +64,13 @@ class Search extends Component {
 
       axios.post('http://localhost:3007/movies/', addedMovieInfo)
        .then((response) => {
-        // const newMovie = { ...response.data.movie }
-        // const currentMovies = this.state.movies;
-        // currentMovies.push(newMovie);
-
         this.setState({
-          // movies: currentMovies,
           confirmation: `Succesfully added ${response.data.title} to library.`,
           });
+          this.props.addMovieCallback(response.data);
         })
        .catch((error) => {
-         console.log(error.response)
+         console.log(error.message)
         this.setState({
          errorMessage: `${error.response.data.message} when adding movie to library.`
         })

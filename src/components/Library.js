@@ -8,24 +8,14 @@ import './Library.css';
 class Library extends Component {
   render() {
       const movieComponents = this.props.movies.map((movie, i) => {
-        // let a = movie.release_date;
-        // console.log(a);
-        // console.log(typeof a);
-        // console.log("******")
-        // let b = a.substr(0, 4);
-        // console.log(b);
-        // console.log(typeof b);
-        // let c = parseInt(b,10);
-        // console.log(c);
-        // console.log(typeof c);
-        // console.log(parseInt(movie.release_date.substr(0, 4),10));
+
         if (movie.release_date !== null && parseInt(movie.release_date.substr(0, 4),10) < 2000) {
         return (
             <div key={i} className="movie">
             <div className="movie__section">
               <h3 className="movie__title">{movie.title}</h3>
-              <div className="cover__container">{/* <img className="image" src={video} alt="blockbuster cover"/> */}
-                <span className="Centerer"></span><img className="cover" src={movie.image_url} alt="movie cover"/>
+              <div className="cover__container">
+                <img className="cover" src={movie.image_url} alt="movie cover"/>
                 <div className="movie__info">
                     {movie.overview}
                 </div>
@@ -42,7 +32,7 @@ class Library extends Component {
 
     return (
         <section>
-          <ul>
+          <ul id="movie_container">
             {movieComponents}
           </ul>
         </section>
